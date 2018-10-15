@@ -38,7 +38,7 @@ Route::group(['middleware' => 'jwt'], function (){
 
     Route::group(['prefix' => 'profile'], function () {
         Route::post('/index',                'ProfileController@index')                     ->name('profile.index');
-        Route::post('/show',                'ProfileController@show')                       ->name('profile.show');
+        Route::get('/show/{profile}',        'ProfileController@show')                       ->name('profile.show');
         Route::post('/store',                'ProfileController@store')                     ->name('profile.store');
         Route::put('/update/{profile}',      'ProfileController@update')                    ->name('profile.update');
         Route::delete('/delete/{profile}',   'ProfileController@delete')                    ->name('profile.delete');
@@ -46,11 +46,16 @@ Route::group(['middleware' => 'jwt'], function (){
     });
 
     Route::group(['prefix' => 'location'], function () {
-        Route::post('/index',                'LocationController@index')                    ->name('locatoin.index');
-        Route::post('/show/{location}',      'LocationController@index')                    ->name('locatoin.show');
-        Route::post('/store',                'LocationController@store')                    ->name('locatoin.store');
-        Route::put('/update/{locatoin}',     'LocationController@update')                   ->name('locatoin.update');
-        Route::delete('/delete/{locatoin}',  'LocationController@delete')                   ->name('locatoin.delete');
+        Route::post('/index',                'LocationController@index')                    ->name('location.index');
+        Route::get('/show/{location}',       'LocationController@index')                     ->name('location.show');
+        Route::post('/store',                'LocationController@store')                    ->name('location.store');
+        Route::put('/update/{location}',     'LocationController@update')                   ->name('location.update');
+        Route::delete('/delete/{location}',  'LocationController@delete')                   ->name('location.delete');
+    });
+
+    Route::group(['prefix' => 'auction'], function () {
+        Route::post('/index',                'AuctionController@index')                     ->name('auction.index');
+        Route::get('/show/{auction}',        'AuctionController@index')                       ->name('auction.show');
     });
 
 });

@@ -17,10 +17,12 @@ class CreateProfilesTable extends Migration
             $table->increments('id');
             $table->integer('age')->nullable()->comment('idade');
             $table->boolean('gender')->nullable()->comment('genero boleano, 0 - Homem, 1 - Mulher');
-            $table->integer('phone')->nullable()->comment('telefone pra contato');
+            $table->string('phone')->nullable()->comment('telefone pra contato');
             $table->longText('photo_address')->nullable()->comment('endereço de foto');
             $table->longText('about')->nullable()->comment('um pouco sobre o usuario');
             $table->string('cpf')->comment('cpf do usuário');
+
+            $table->unsignedInteger('user_id')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

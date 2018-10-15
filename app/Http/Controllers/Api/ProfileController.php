@@ -27,7 +27,16 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return ProfileCollection::collection(auth()->user()->Profile);
+        try{
+            if(isset(auth()->user()->Profile)){
+                return ProfileCollection::collection(auth()->user()->Profile);
+            }
+            throw new \Exception('Não possui dados');
+
+        }catch (\Exception $e){
+            return response()->json($e->getMessage(), Response::HTTP_OK);
+        }
+
     }
 
 
@@ -39,26 +48,31 @@ class ProfileController extends Controller
      */
     public function store(ProfileRequest $request)
     {
-        auth()->user()->Profile->create($request->all());
-        return response('Created', Response::HTTP_CREATED);
+        try{
+            auth()->user()->Profile()->create($request->all());
+            return response('Created', Response::HTTP_CREATED);
+        }catch (\Exception $e){
+            return response()->json($e->getMessage(), Response::HTTP_BAD_GATEWAY);
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Question  $question
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Profile $profile
+     * @return ProfileCollection
      */
     public function show(Profile $profile)
     {
-        return new ProfileCollection($profile);
+        return response()->json($profile);
+//        return new ProfileCollection($profile);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Profile  $profile
+     * @param  \App\Models\Profile  $profile
      * @return \Illuminate\Http\Response
      */
     public function update(ProfileRequest $request, Profile $profile)
@@ -71,7 +85,7 @@ class ProfileController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Profile  $profile
+     * @param  \App\Models\Profile  $profile
      * @return \Illuminate\Http\Response
      */
     public function destroy(Profile $profile)

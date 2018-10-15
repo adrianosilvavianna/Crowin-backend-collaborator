@@ -18,7 +18,7 @@ class Profile extends Model
      *
      * @var array
      */
-    protected $guarded = [];
+    protected $fillable = ['age', 'gender', 'phone', 'photo_address', 'about', 'nick_name', 'cpf'];
 
     /**
      * Get relationship

@@ -17,9 +17,6 @@ class AddSocialiteToUsersTable extends Migration
             $table->string('facebook');
             $table->string('google');
             $table->string('github');
-
-            $table->unsignedInteger('profile_id')->nullable();
-
         });
     }
 
