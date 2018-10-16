@@ -68,4 +68,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Location::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function Favorites()
+    {
+        // return $this->hasMany('App\Models\Auction')->withPivot('auction_user_favorites');
+    }
 }

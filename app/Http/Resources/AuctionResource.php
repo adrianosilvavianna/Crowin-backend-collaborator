@@ -21,7 +21,7 @@ class AuctionResource extends Resource
             'description' => $this->description,
             'start' => $this->start,
             'end' => $this->end,
-            'payment_status' => $this->payment_status
+            'payment_status' => $this->payment_status,
         ];
     }
 }

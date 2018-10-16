@@ -8,18 +8,23 @@ class Auction extends Model
 {
     protected $fillable = [];
 
-    public function product()
+    public function Product()
     {
         return $this->belongsTo('App\Product');
     }
 
-    public function winner()
+    public function Winner()
     {
         return $this->belongsTo('App\User', 'winner_id');
     }
 
-    public function bids()
+    public function Bids()
     {
         return $this->hasMany('App\Bid');
+    }
+
+    public function Favorites()
+    {
+        // return $this->belongsToMany('App\Models\User')->using('App\Models\AuctionUserFavorite');
     }
 }
