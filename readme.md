@@ -15,6 +15,7 @@
 ## Commands
 
 - Composer install 
+- php artisan jwt:secret
 
 ## Add .env
 

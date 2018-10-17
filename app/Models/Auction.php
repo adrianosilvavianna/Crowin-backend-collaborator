@@ -10,21 +10,21 @@ class Auction extends Model
 
     public function Product()
     {
-        return $this->belongsTo('App\Product');
+        return $this->belongsTo(Product::class);
     }
 
     public function Winner()
     {
-        return $this->belongsTo('App\User', 'winner_id');
+        return $this->belongsTo(User::class, 'winner_id');
     }
 
     public function Bids()
     {
-        return $this->hasMany('App\Bid');
+        return $this->hasMany(Bid::class);
     }
 
     public function Favorites()
     {
-        // return $this->belongsToMany('App\Models\User')->using('App\Models\AuctionUserFavorite');
+        return $this->belongsToMany(User::class, 'auction_user_favorites');
     }
 }

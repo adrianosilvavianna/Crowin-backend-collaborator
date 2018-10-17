@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileRequest;
-use App\Http\Resources\ProfileCollection;
+use App\Http\Resources\ProfileResource;
 use App\Models\Profile;
 use Illuminate\Http\Response;
 
@@ -29,12 +29,12 @@ class ProfileController extends Controller
     {
         try{
             if(isset(auth()->user()->Profile)){
-                return ProfileCollection::collection(auth()->user()->Profile);
+                return ProfileResource::collection(auth()->user()->Profile);
             }
-            throw new \Exception('Não possui dados');
+            throw new \Exception(__('messages.not_data'));
 
         }catch (\Exception $e){
-            return response()->json($e->getMessage(), Response::HTTP_OK);
+            return response()->json(['message' => $e->getMessage()], Response::HTTP_OK);
         }
 
     }
@@ -60,12 +60,11 @@ class ProfileController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Profile $profile
-     * @return ProfileCollection
+     * @return ProfileResource
      */
     public function show(Profile $profile)
     {
-        return response()->json($profile);
-//        return new ProfileCollection($profile);
+       return new ProfileResource($profile);
     }
 
     /**

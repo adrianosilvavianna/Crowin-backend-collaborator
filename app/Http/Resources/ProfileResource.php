@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\Resource;
 
-class ProfileCollection extends ResourceCollection
+class ProfileResource extends Resource
 {
     /**
      * Transform the resource collection into an array.
