@@ -32,11 +32,9 @@ class ProfileController extends Controller
                 return ProfileResource::collection(auth()->user()->Profile);
             }
             throw new \Exception(__('messages.not_data'));
-
         }catch (\Exception $e){
             return response()->json(['message' => $e->getMessage()], Response::HTTP_OK);
         }
-
     }
 
 
@@ -50,9 +48,9 @@ class ProfileController extends Controller
     {
         try{
             auth()->user()->Profile()->create($request->all());
-            return response('Created', Response::HTTP_CREATED);
+            return response(__('messages.updated'), Response::HTTP_CREATED);
         }catch (\Exception $e){
-            return response()->json($e->getMessage(), Response::HTTP_BAD_GATEWAY);
+            return response()->json(['message' => __('messages.error_default')], Response::HTTP_BAD_GATEWAY);
         }
     }
 
@@ -76,10 +74,14 @@ class ProfileController extends Controller
      */
     public function update(ProfileRequest $request, Profile $profile)
     {
-        $profile->update($request->all());
-        return response('Updated', Response::HTTP_ACCEPTED);
+			try{
+				$profile->update($request->all());
+        return response(__('messages.updated'), Response::HTTP_ACCEPTED);
+			}catch (\Exception $e){
+					return response()->json(['message' => __('messages.error_default')], Response::HTTP_BAD_GATEWAY);
+			}
+		}
 
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -90,6 +92,6 @@ class ProfileController extends Controller
     public function destroy(Profile $profile)
     {
         $profile->delete();
-        return response(null, Response::HTTP_NO_CONTENT);
+        return response(['message' => __('messages.deleted')], Response::HTTP_NO_CONTENT);
     }
 }

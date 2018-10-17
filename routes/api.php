@@ -59,4 +59,8 @@ Route::group(['middleware' => 'jwt'], function (){
         Route::get('/show/{auction}',       'AuctionController@index')                       ->name('auction.show');
     });
 
+		Route::group(['prefix' => 'favorite'], function () {
+        Route::get('/change/{auction}',                'FavoriteAuctionController@toChange')                     ->name('auction.change');
+    });
+
 });

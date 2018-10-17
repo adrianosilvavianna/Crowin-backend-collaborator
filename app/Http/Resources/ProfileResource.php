@@ -7,7 +7,7 @@ use Illuminate\Http\Resources\Json\Resource;
 class ProfileResource extends Resource
 {
     /**
-     * Transform the resource collection into an array.
+     * Transform the resource collection into an	 array.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array
