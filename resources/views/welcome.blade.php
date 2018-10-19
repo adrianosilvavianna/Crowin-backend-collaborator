@@ -83,12 +83,12 @@
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="{{ route('api.auth.redirect', 'facebook') }}">Login in with Facebook</a>
+                    <a href="{{ route('api.auth.redirect', 'google') }}">Login in with Google +</a>
+                    <a href="{{ route('api.auth.redirect', 'Twitter') }}">Login in with Twitter</a>
+                    <a href="{{ route('api.auth.redirect', 'github') }}">Login in with Github</a>
                 </div>
+
             </div>
         </div>
     </body>

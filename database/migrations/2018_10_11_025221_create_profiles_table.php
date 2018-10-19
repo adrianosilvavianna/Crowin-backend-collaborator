@@ -20,7 +20,7 @@ class CreateProfilesTable extends Migration
             $table->string('phone')->nullable()->comment('telefone pra contato');
             $table->longText('photo_address')->nullable()->comment('endereço de foto');
             $table->longText('about')->nullable()->comment('um pouco sobre o usuario');
-            $table->string('cpf')->comment('cpf do usuário');
+            $table->string('cpf')->nullable()->comment('cpf do usuário');
 
             $table->unsignedInteger('user_id')->nullable();
 

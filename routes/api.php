@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 
 
-Route::group(['prefix' => 'auth'], function () {
+Route::group(['middleware' => ['web'], 'prefix' => 'auth'], function () {
 
     //Rotas de autenticação
     Route::post('login',                    'AuthController@login')                         ->name('auth.login');
@@ -25,14 +25,17 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('register/',                 'AuthController@signUp')                        ->name('auth.refresh');
     Route::post('register',                 'AuthController@signUp')                        ->name('auth.refresh');
 
-    Route::get('/facebook',                 'SocialAuthController@facebook')                ->name('auth.facebook');
-    Route::get('/facebook/callback',        'SocialAuthController@facebookCallback')        ->name('auth.facebookCallback');
+//    Route::get('/facebook',                 'SocialAuthController@facebook')                ->name('auth.facebook');
+//    Route::get('/facebook/callback',        'SocialAuthController@facebookCallback')        ->name('auth.facebookCallback');
+//
+//    Route::get('/github',                   'SocialAuthController@github')                  ->name('auth.github');
+//    Route::get('/github/callback',          'SocialAuthController@githubCallback')          ->name('auth.githubCallback');
+//
+//    Route::get('/google',                   'SocialAuthController@google')                  ->name('auth.google');
+//    Route::get('/google/callback',          'SocialAuthController@google')                  ->name('auth.googleCallback');
 
-    Route::get('/github',                   'SocialAuthController@github')                  ->name('auth.github');
-    Route::get('/github/callback',          'SocialAuthController@githubCallback')          ->name('auth.githubCallback');
-
-    Route::get('/google',                   'SocialAuthController@google')                  ->name('auth.google');
-    Route::get('/google/callback',          'SocialAuthController@google')                  ->name('auth.googleCallback');
+    Route::get ( '/redirect/{service}', 'SocialAuthController@redirect' )->name('api.auth.redirect');
+    Route::get ( '/callback/{service}', 'SocialAuthController@callback' )->name('api.auth.callback');
 });
 
 Route::group(['middleware' => 'jwt'], function (){

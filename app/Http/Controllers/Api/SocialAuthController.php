@@ -108,4 +108,62 @@ class SocialAuthController extends Controller
         Auth::login($user);
         return redirect()->intended('/user/trip');
     }
+
+
+
+    public function redirect($service) {
+        return Socialite::driver( $service )->redirect();
+    }
+
+
+    public function callback($service) {
+
+        $userSocial = Socialite::with ( $service )->user ();
+
+        $email = $userSocial->getEmail();
+
+        // if there is an authenticated user, it links with the user
+        if (Auth::check()) {
+            $user = auth()->user();
+            $user->google = $email;
+            $user->save();
+            return redirect()->json(null, Response::HTTP_OK);
+        }
+
+        $user = User::where($service, $email);
+
+        // se existir usuário com o email $driver ja vinculado
+        if (isset($user->name)) {
+            $token = Auth::login($user);
+            return RedirectToken::respondWithToken($token);
+        }
+
+        // se existir algum usuario com este email
+        if (User::where('email', $email)->exists()) {
+
+            $user = User::where('email', $email)->first();
+            $user->google = $email;
+            $user->save();
+
+            $token = Auth::login($user);
+
+            return RedirectToken::respondWithToken($token);
+        }
+
+        $user = new User();
+        $user->name = $userSocial->getName();
+        $user->email = $userSocial->getEmail();
+        $user->google = $userSocial->getEmail();
+        $user->password = bcrypt($userSocial->token);
+        $user->role = 0;
+        $user->slug = $userSocial->getName();
+        $user->collected = 0;
+        $user->save();
+        $user->Profile()->create(['nick_name' => $userSocial->getName(), 'photo_address' => $userSocial->getAvatar()]);
+        $token = Auth::login($user);
+        return RedirectToken::respondWithToken($token);
+    }
+
 }
+
+

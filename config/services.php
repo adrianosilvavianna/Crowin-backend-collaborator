@@ -46,11 +46,18 @@ return [
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'), // Your GitHub Client Secret
         'redirect'      => env('FACEBOOK_CALLBACK_URL'),
     ],
-
     'google' => [
-        'client_id'     => env('GOOGLE_CLIENT_ID'),         // Your Facebook Client ID
-        'client_secret' => env('GOOGLE_CLIENT_SECRET'), // Your GitHub Client Secret
-        'redirect'      => env('GOOGLE_CALLBACK_URL'),
+        'client_id' => env ( 'G+_CLIENT_ID' ),
+        'client_secret' => env ( 'G+_CLIENT_SECRET' ),
+        'redirect' => env ( 'G+_REDIRECT' )
     ],
+    'twitter' => [
+
+        'client_id' => env ( 'TWITTER_CLIENT_ID' ),
+        'client_secret' => env ( 'TWITTER_CLIENT_SECRET' ),
+        'redirect' => env ( 'TWITTER_REDIRECT' )
+    ],
+
+
 
 ];
