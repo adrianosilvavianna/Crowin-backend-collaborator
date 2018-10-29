@@ -77,4 +77,35 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany(Auction::class, 'auction_user_favorites');
     }
+
+    /**
+     * retorn all auctions
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function Auctions()
+    {
+        return $this->belongsToMany(Auction::class, 'bids');
+    }
+
+    /**
+     * return winners auctions
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function WinnerAuctions()
+    {
+        return $this->hasMany(Auction::class, 'winner_id');
+    }
+
+    /**
+     * relationship for create Bids
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function Bids()
+    {
+        return $this->hasMany(Bid::class, 'user_id');
+    }
+
 }

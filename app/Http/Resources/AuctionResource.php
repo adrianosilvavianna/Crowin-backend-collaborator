@@ -19,10 +19,10 @@ class AuctionResource extends Resource
             'status' => $this->status,
             'name' => $this->name,
             'description' => $this->description,
-            'start' => $this->start,
-            'end' => $this->end,
+            'start' => $this->inicio,
             'payment_status' => $this->payment_status,
-            'slug' => $this->slug
+            'slug' => $this->slug,
+            'created_at' => $this->created_at
         ];
     }
 }

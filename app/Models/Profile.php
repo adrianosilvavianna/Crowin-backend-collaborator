@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Profile extends Model
 {
-		use SoftDeletes;
+    use SoftDeletes;
     /**
      * Get table relationship
      *
@@ -22,8 +22,11 @@ class Profile extends Model
      */
     protected $fillable = ['age', 'gender', 'phone', 'photo_address', 'about', 'nick_name', 'cpf'];
 
-		public function User()
-		{
-		  return  $this->belongsTo(User::class);
-		}
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function User()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

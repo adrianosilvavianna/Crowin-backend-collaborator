@@ -125,7 +125,8 @@ class SocialAuthController extends Controller
         // if there is an authenticated user, it links with the user
         if (Auth::check()) {
             $user = auth()->user();
-            $user->google = $email;
+            $user->service = $email;
+            $user->driver = $service;
             $user->save();
             return redirect()->json(null, Response::HTTP_OK);
         }
@@ -142,7 +143,8 @@ class SocialAuthController extends Controller
         if (User::where('email', $email)->exists()) {
 
             $user = User::where('email', $email)->first();
-            $user->google = $email;
+            $user->service = $email;
+            $user->driver = $service;
             $user->save();
 
             $token = Auth::login($user);
@@ -152,12 +154,11 @@ class SocialAuthController extends Controller
 
         $user = new User();
         $user->name = $userSocial->getName();
-        $user->email = $userSocial->getEmail();
-        $user->google = $userSocial->getEmail();
+        $user->service = $userSocial->getEmail();
+        $user->driver = $userSocial->getEmail();
         $user->password = bcrypt($userSocial->token);
         $user->role = 0;
         $user->slug = $userSocial->getName();
-        $user->collected = 0;
         $user->save();
         $user->Profile()->create(['nick_name' => $userSocial->getName(), 'photo_address' => $userSocial->getAvatar()]);
         $token = Auth::login($user);

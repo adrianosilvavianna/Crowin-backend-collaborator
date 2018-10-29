@@ -21,18 +21,16 @@ class ProfileController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return ProfileResource|\Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        try{
-            if(isset(auth()->user()->Profile)){
-                return ProfileResource::collection(auth()->user()->Profile);
+        try {
+            if (isset(auth()->user()->Profile)) {
+                return new ProfileResource(auth()->user()->Profile);
             }
             throw new \Exception(__('messages.not_data'));
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], Response::HTTP_OK);
         }
     }
@@ -41,15 +39,15 @@ class ProfileController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(ProfileRequest $request)
     {
-        try{
+        try {
             auth()->user()->Profile()->create($request->all());
-            return response(__('messages.updated'), Response::HTTP_CREATED);
-        }catch (\Exception $e){
+            return response(__('messages.created'), Response::HTTP_CREATED);
+        } catch (\Exception $e) {
             return response()->json(['message' => __('messages.error_default')], Response::HTTP_BAD_GATEWAY);
         }
     }
@@ -62,31 +60,31 @@ class ProfileController extends Controller
      */
     public function show(Profile $profile)
     {
-       return new ProfileResource($profile);
+        return new ProfileResource($profile);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Profile  $profile
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\Profile $profile
      * @return \Illuminate\Http\Response
      */
     public function update(ProfileRequest $request, Profile $profile)
     {
-			try{
-				$profile->update($request->all());
-        return response(__('messages.updated'), Response::HTTP_ACCEPTED);
-			}catch (\Exception $e){
-					return response()->json(['message' => __('messages.error_default')], Response::HTTP_BAD_GATEWAY);
-			}
-		}
+        try {
+            $profile->update($request->all());
+            return response(__('messages.updated'), Response::HTTP_ACCEPTED);
+        } catch (\Exception $e) {
+            return response()->json(['message' => __('messages.error_default')], Response::HTTP_BAD_GATEWAY);
+        }
+    }
 
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Profile  $profile
+     * @param  \App\Models\Profile $profile
      * @return \Illuminate\Http\Response
      */
     public function destroy(Profile $profile)
