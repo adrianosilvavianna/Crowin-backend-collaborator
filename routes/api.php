@@ -50,7 +50,7 @@ Route::group(['middleware' => 'jwt'], function (){
 
     Route::group(['prefix' => 'auction'], function () {
         Route::get('/index',                'AuctionController@index')                     ->name('auction.index');
-        Route::get('/show/{auction}',       'AuctionController@index')                       ->name('auction.show');
+        Route::get('/show/{auction}',       'AuctionController@show')                       ->name('auction.show');
     });
 
     Route::group(['prefix' => 'favorite'], function () {
