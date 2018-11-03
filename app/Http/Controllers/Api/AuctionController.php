@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class AuctionController extends Controller
 {
-		protected $auction;
+    protected $auction;
 
     public function __construct(Auction $auction)
     {
@@ -21,11 +21,11 @@ class AuctionController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-		 */
+     */
     public function index()
     {
-        $auctions = $this->auction->where('inicio', '>=', Carbon::now()->toDateTimeString())->get();
-        return AuctionResource::collection($this->auction->all());
+        $auctions = $this->auction->where('inicio', '>=', Carbon::now()->toDateTimeString())->where('status', '<>', 'Finalizado')->get();
+        return AuctionResource::collection($auctions);
     }
 
     /**

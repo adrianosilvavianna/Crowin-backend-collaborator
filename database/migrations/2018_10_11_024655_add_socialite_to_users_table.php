@@ -14,10 +14,8 @@ class AddSocialiteToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('facebook')->nullable()->comment('email do facebook');
-            $table->string('google')->nullable()->comment('email do google');
-            $table->string('github')->nullable()->comment('email do google');
-            $table->string('twitter')->nullable()->comment('email do twitter');
+            $table->string('service')->nullable()->comment('email da rede social');
+            $table->string('driver')->nullable()->comment('nome da rede social');
         });
     }
 

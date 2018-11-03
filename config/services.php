@@ -42,9 +42,9 @@ return [
     ],
 
     'facebook' => [
-        'client_id'     => env('FACEBOOK_CLIENT_ID'),         // Your Facebook Client ID
-        'client_secret' => env('FACEBOOK_CLIENT_SECRET'), // Your GitHub Client Secret
-        'redirect'      => env('FACEBOOK_CALLBACK_URL'),
+        'client_id'     => env('FB_CLIENT_ID'),         // Your Facebook Client ID
+        'client_secret' => env('FB_CLIENT_SECRET'), // Your GitHub Client Secret
+        'redirect'      => env('FB_REDIRECT'),
     ],
     'google' => [
         'client_id' => env ( 'G+_CLIENT_ID' ),

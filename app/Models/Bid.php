@@ -7,19 +7,33 @@ use Illuminate\Database\Eloquent\Model;
 class Bid extends Model
 {
     /**
+     * @var array
+     */
+    protected $fillable = ['user_id','auction_id'];
+
+    /**
     * Get table
     *
     * @var string
     */
-    protected $table = 'products';
+    protected $table = 'bids';
 
-    spublic function Auction()
+    /**
+     * @return mixed
+     */
+    public function Auction()
     {
-        return $belongsTo(Auction::class);
+        return $this->belongsTo(Auction::class);
     }
 
+    /**
+     * @return mixed
+     */
     public function User()
     {
-        return $belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
+
+
+
 }

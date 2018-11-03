@@ -19,20 +19,11 @@ Route::group(['middleware' => ['web'], 'prefix' => 'auth'], function () {
 
     //Rotas de autenticação
     Route::post('login',                    'AuthController@login')                         ->name('auth.login');
-    Route::post('logout',                   'AuthController@logout')                        ->name('auth.login');
+    Route::post('logout',                   'AuthController@logout')                        ->name('auth.logout');
     Route::post('refresh',                  'AuthController@refresh')                       ->name('auth.refresh');
     Route::post('me',                       'AuthController@me')                            ->name('auth.me');
     Route::get('register/',                 'AuthController@signUp')                        ->name('auth.refresh');
     Route::post('register',                 'AuthController@signUp')                        ->name('auth.refresh');
-
-//    Route::get('/facebook',                 'SocialAuthController@facebook')                ->name('auth.facebook');
-//    Route::get('/facebook/callback',        'SocialAuthController@facebookCallback')        ->name('auth.facebookCallback');
-//
-//    Route::get('/github',                   'SocialAuthController@github')                  ->name('auth.github');
-//    Route::get('/github/callback',          'SocialAuthController@githubCallback')          ->name('auth.githubCallback');
-//
-//    Route::get('/google',                   'SocialAuthController@google')                  ->name('auth.google');
-//    Route::get('/google/callback',          'SocialAuthController@google')                  ->name('auth.googleCallback');
 
     Route::get ( '/redirect/{service}', 'SocialAuthController@redirect' )->name('api.auth.redirect');
     Route::get ( '/callback/{service}', 'SocialAuthController@callback' )->name('api.auth.callback');
@@ -62,8 +53,13 @@ Route::group(['middleware' => 'jwt'], function (){
         Route::get('/show/{auction}',       'AuctionController@index')                       ->name('auction.show');
     });
 
-		Route::group(['prefix' => 'favorite'], function () {
+    Route::group(['prefix' => 'favorite'], function () {
         Route::get('/change/{auction}',                'FavoriteAuctionController@toChange')                     ->name('auction.change');
+    });
+
+    Route::group(['prefix' => 'bids'], function () {
+        Route::get('/history',                'BidController@history')                     ->name('bid.history');
+        Route::get('/totalBids',              'BidController@getCountBids')                ->name('bid.getCountBids');
     });
 
 });

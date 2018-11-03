@@ -22,6 +22,7 @@ class ProfileResource extends Resource
             'phone' => $this->phone,
             'about' => $this->about,
             'cpf' => $this->cpf,
+            'created_at' => $this->created_at
         ];
     }
 }
