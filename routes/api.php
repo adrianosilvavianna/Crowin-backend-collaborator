@@ -13,7 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::group(['prefix' => 'auction'], function () {
+    Route::get('/index',                'AuctionController@index')                     ->name('auction.index');
+    Route::get('/show/{auction}',       'AuctionController@show')                       ->name('auction.show');
 
+});
+
+Route::group(['prefix' => 'package'], function () {
+    Route::get('/index',                'PackageController@index')                     ->name('auction.index');
+});
 
 Route::group(['middleware' => ['web'], 'prefix' => 'auth'], function () {
 
@@ -46,11 +54,6 @@ Route::group(['middleware' => 'jwt'], function (){
         Route::post('/store',                'LocationController@store')                    ->name('location.store');
         Route::put('/update/{location}',     'LocationController@update')                   ->name('location.update');
         Route::delete('/delete/{location}',  'LocationController@delete')                   ->name('location.delete');
-    });
-
-    Route::group(['prefix' => 'auction'], function () {
-        Route::get('/index',                'AuctionController@index')                     ->name('auction.index');
-        Route::get('/show/{auction}',       'AuctionController@show')                       ->name('auction.show');
     });
 
     Route::group(['prefix' => 'favorite'], function () {
