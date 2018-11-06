@@ -21,6 +21,9 @@ class CreateProfilesTable extends Migration
             $table->longText('photo_address')->nullable()->comment('endereço de foto');
             $table->longText('about')->nullable()->comment('um pouco sobre o usuario');
             $table->string('cpf')->nullable()->comment('cpf do usuário');
+            $table->string('facebook_link')->nullable()->comment('Link Facebook');
+            $table->string('twitter_link')->nullable()->comment('Link Twitter');
+            $table->string('nick_name')->nullable()->comment('apelido rede social');
 
             $table->unsignedInteger('user_id')->nullable();
 

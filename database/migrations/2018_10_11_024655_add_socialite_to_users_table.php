@@ -14,7 +14,7 @@ class AddSocialiteToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('service')->nullable()->comment('email da rede social');
+            $table->string('email_service')->nullable()->comment('email da rede social');
             $table->string('driver')->nullable()->comment('nome da rede social');
         });
     }
@@ -27,10 +27,8 @@ class AddSocialiteToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropIfExists('facebook');
-            $table->dropIfExists('google');
-            $table->dropIfExists('github');
-            $table->dropIfExists('profile_id');
+            $table->dropIfExists('email_service');
+            $table->dropIfExists('driver');
         });
     }
 }

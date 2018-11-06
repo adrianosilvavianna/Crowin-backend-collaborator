@@ -20,7 +20,7 @@ class Profile extends Model
      *
      * @var array
      */
-    protected $fillable = ['age', 'gender', 'phone', 'photo_address', 'about', 'nick_name', 'cpf'];
+    protected $guarded = [];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

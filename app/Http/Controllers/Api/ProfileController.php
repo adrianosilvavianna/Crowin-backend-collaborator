@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Resources\ProfileResource;
 use App\Models\Profile;
+use App\Models\User;
 use Illuminate\Http\Response;
 
 class ProfileController extends Controller
@@ -58,9 +59,9 @@ class ProfileController extends Controller
      * @param  \App\Models\Profile $profile
      * @return ProfileResource
      */
-    public function show(Profile $profile)
+    public function show()
     {
-        return new ProfileResource($profile);
+        return new ProfileResource(auth()->user()->Profile);
     }
 
     /**
@@ -91,5 +92,21 @@ class ProfileController extends Controller
     {
         $profile->delete();
         return response(['message' => __('messages.deleted')], Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * Return public data from Profile
+     *
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function showPublic(User $user)
+    {
+        return response()->json([
+            'name' => $user->name,
+            'photo' => $user->Profile->photo_address,
+            'twitter_link' => $user->Profile->twitter_link,
+            'facebook_link' => $user->Profile->facebook_link,
+        ]);
     }
 }

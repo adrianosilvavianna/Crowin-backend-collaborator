@@ -118,51 +118,78 @@ class SocialAuthController extends Controller
 
     public function callback($service) {
 
-        $userSocial = Socialite::with ( $service )->user ();
+        try{
+            $userSocial = Socialite::with ( $service )->user();
 
-        $email = $userSocial->getEmail();
+            $email = $userSocial->getEmail();
 
-        // if there is an authenticated user, it links with the user
-        if (Auth::check()) {
-            $user = auth()->user();
-            $user->service = $email;
-            $user->driver = $service;
-            $user->save();
-            return redirect()->json(null, Response::HTTP_OK);
-        }
+            // if there is an authenticated user, it links with the user
+            if (Auth::check()) {
+                $user = auth()->user();
+                $user->email_service = $email;
+                $user->driver = $service;
+                $user->save();
+                return response()->json(null, Response::HTTP_OK);
+            }
 
-        $user = User::where($service, $email);
+            $user = User::where($service, $email);
 
-        // se existir usuário com o email $driver ja vinculado
-        if (isset($user->name)) {
+            // se existir usuário com o email $driver ja vinculado
+            if (isset($user->name)) {
+                $token = Auth::login($user);
+                return RedirectToken::respondWithToken($token);
+            }
+
+            // se existir algum usuario com este email
+            if (User::where('email', $email)->exists()) {
+
+                $user = User::where('email', $email)->first();
+                $user->email_service = $email;
+                $user->driver = $service;
+                $user->save();
+
+                $token = Auth::login($user);
+
+                return RedirectToken::respondWithToken($token);
+            }
+
+            $user = $this->createUser($userSocial, $service);
+
+            $this->createProfileUser($user, $userSocial);
+
             $token = Auth::login($user);
             return RedirectToken::respondWithToken($token);
+
+        }catch (\Exception $e){
+            dd($e->getMessage());
+            return response()->json(['message' => __('messages.error_default')], Response::HTTP_BAD_GATEWAY);
         }
 
-        // se existir algum usuario com este email
-        if (User::where('email', $email)->exists()) {
+    }
 
-            $user = User::where('email', $email)->first();
-            $user->service = $email;
-            $user->driver = $service;
-            $user->save();
 
-            $token = Auth::login($user);
-
-            return RedirectToken::respondWithToken($token);
-        }
-
+    private function createUser($userSocial, $service)
+    {
         $user = new User();
         $user->name = $userSocial->getName();
-        $user->service = $userSocial->getEmail();
-        $user->driver = $userSocial->getEmail();
+        $user->email = $userSocial->getEmail();
+        $user->email_service = $userSocial->getEmail();
+        $user->driver = $service;
         $user->password = bcrypt($userSocial->token);
         $user->role = 0;
         $user->slug = $userSocial->getName();
         $user->save();
-        $user->Profile()->create(['nick_name' => $userSocial->getName(), 'photo_address' => $userSocial->getAvatar()]);
-        $token = Auth::login($user);
-        return RedirectToken::respondWithToken($token);
+        return $user;
+    }
+
+    private function createProfileUser($user, $userSocial)
+    {
+        $user->Profile()->create([
+            'nick_name'     =>  $userSocial->getName(),
+            'photo_address' =>  $userSocial->getAvatar(),
+            'facebook_link' =>  'https://facebook.com/' . $userSocial->id,
+            'twitter_link'  =>  'https://twitter.com/'. $userSocial->getName()
+        ]);
     }
 
 }

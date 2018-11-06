@@ -13,9 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('profile/show_public/{user}',        'ProfileController@showPublic')        ->name('profile.showPublic');
+
 Route::group(['prefix' => 'auction'], function () {
     Route::get('/index',                'AuctionController@index')                     ->name('auction.index');
-    Route::get('/show/{auction}',       'AuctionController@show')                       ->name('auction.show');
+    Route::get('/show/{auction}',       'AuctionController@show')                      ->name('auction.show');
 
 });
 
@@ -41,7 +43,7 @@ Route::group(['middleware' => 'jwt'], function (){
 
     Route::group(['prefix' => 'profile'], function () {
         Route::get('/index',                'ProfileController@index')                     ->name('profile.index');
-        Route::get('/show/{profile}',        'ProfileController@show')                       ->name('profile.show');
+        Route::get('/show',        'ProfileController@show')                       ->name('profile.show');
         Route::post('/store',                'ProfileController@store')                     ->name('profile.store');
         Route::put('/update/{profile}',      'ProfileController@update')                    ->name('profile.update');
         Route::delete('/delete/{profile}',   'ProfileController@delete')                    ->name('profile.delete');
