@@ -22,7 +22,17 @@ class ProfileResource extends Resource
             'phone' => $this->phone,
             'about' => $this->about,
             'cpf' => $this->cpf,
-            'created_at' => $this->created_at
+            'created_at' => $this->created_at,
+            'email' => $this->User->email,
+            'name' => $this->User->name,
+            'location' => [
+                'address' => $this->User->Location->address,
+                'city' => $this->User->Location->city,
+                'number' => $this->User->Location->number,
+                'zip_code' => $this->User->Location->zip_code,
+                'district' => $this->User->Location->district,
+                'complement' => $this->User->Location->complement,
+            ]
         ];
     }
 }
