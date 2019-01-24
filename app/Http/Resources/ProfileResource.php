@@ -14,25 +14,34 @@ class ProfileResource extends Resource
      */
     public function toArray($request)
     {
+        $location = [];
+
+        if(isset($this->User->Locations)){
+            foreach($this->User->Locations as $lc)
+            {
+                $location[] = array_merge([
+                    'address' => $lc->address,
+                    'city' => $lc->city,
+                    'number' => $lc->number,
+                    'zip_code' => $lc->zip_code,
+                    'district' => $lc->district,
+                    'complement' => $lc->complement,
+                ]);
+            }            
+        }
+
         return [
-            'id' => $this->id,
+            'id' => $this->User->id,
             'photo_address' => $this->photo_address,
+            'email' => $this->User->email,
+            'name' => $this->User->name,
             'age' => $this->age,
             'gender' => $this->gender,
             'phone' => $this->phone,
             'about' => $this->about,
             'cpf' => $this->cpf,
             'created_at' => $this->created_at,
-            'email' => $this->User->email,
-            'name' => $this->User->name,
-            'location' => [
-                'address' => $this->User->Location->address,
-                'city' => $this->User->Location->city,
-                'number' => $this->User->Location->number,
-                'zip_code' => $this->User->Location->zip_code,
-                'district' => $this->User->Location->district,
-                'complement' => $this->User->Location->complement,
-            ]
+            'location' => $location
         ];
     }
 }
