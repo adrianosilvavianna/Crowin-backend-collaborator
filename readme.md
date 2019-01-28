@@ -15,7 +15,9 @@
 ## Commands
 
 - Composer install 
+- php artisan key:generate
 - php artisan jwt:secret
+- tail -f storage/logs/laravel.log
 
 ## Add .env
 
